@@ -1,0 +1,12 @@
+@import "tailwindcss";
+
+@theme {
+  --color-brand: #0f766e;
+  --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
+    "Noto Sans", "PingFang SC", "Microsoft YaHei", sans-serif;
+}
+
+body {
+  background: #f8fafc;
+  color: #0f172a;
+}
