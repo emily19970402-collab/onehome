@@ -6,7 +6,11 @@ import { getServiceClient } from "./supabase";
 export async function getSlotsLeft(): Promise<number | null> {
   const supabase = getServiceClient();
   if (!supabase) return null;
-  const { data, error } = await supabase.rpc("founding_slots_taken");
-  if (error || typeof data !== "number") return null;
-  return Math.max(0, FOUNDING_TOTAL - data);
+  try {
+    const { data, error } = await supabase.rpc("founding_slots_taken");
+    if (error || typeof data !== "number") return null;
+    return Math.max(0, FOUNDING_TOTAL - data);
+  } catch {
+    return null;
+  }
 }

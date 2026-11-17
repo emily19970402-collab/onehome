@@ -6,5 +6,12 @@ export function getServiceClient(): SupabaseClient | null {
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const key = process.env.SUPABASE_SERVICE_ROLE_KEY;
   if (!url || !key) return null;
-  return createClient(url, key, { auth: { persistSession: false, autoRefreshToken: false } });
+  try {
+    const u = new URL(url.trim());
+    if (u.protocol !== "https:" && u.protocol !== "http:") return null;
+  } catch {
+    console.error("NEXT_PUBLIC_SUPABASE_URL 格式不对，应为 https://xxxx.supabase.co");
+    return null;
+  }
+  return createClient(url.trim(), key, { auth: { persistSession: false, autoRefreshToken: false } });
 }
